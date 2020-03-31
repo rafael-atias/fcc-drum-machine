@@ -1,4 +1,4 @@
-Users stories
+## Users stories
 User Story #1: I should be able to see an outer container with a corresponding id="drum-machine" that contains all other elements.
 
 User Story #2: Within #drum-machine I can see an element with a corresponding id="display".
