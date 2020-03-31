@@ -11,42 +11,42 @@ export default function App() {
         <div id="display">
           <p>Q</p>
         </div>
-        <section class="drumpad-container">
-          <div class="drum-pad">
+        <section className="drumpad-container">
+          <div className="drum-pad">
             <p>Q</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>W</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>E</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>A</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>S</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>D</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>Z</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>X</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
-          <div class="drum-pad">
+          <div className="drum-pad">
             <p>C</p>
-            <audio src="#" class="clip" id=""></audio>
+            <audio src="#" className="clip" id=""></audio>
           </div>
         </section>
       </section>
