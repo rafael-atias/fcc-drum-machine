@@ -1,0 +1,43 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--body-background-color);
+}
+
+h1 {
+    @include styleText($color-css-variable: --default-color-text, $font-size: 0.5rem);
+}
+
+footer {
+    @include styleText($color-css-variable: --default-color-text, $font-size: 0.2rem);
+
+    @media(min-width: 25rem) {
+        @include styleText($color-css-variable: --default-color-text);
+    }
+}
+
+#display {
+    @include styleText($color-css-variable: --drum-machine-text, $font-size: 0.4rem);
+    background-color: var(--display-background-color);
+    border: var(--display-border);
+
+    @media(min-width: 25rem) {
+        @include styleText($color-css-variable: --drum-machine-text);
+    }
+}
+
+.drumpad-container {
+    border: var(--drum-pad-container-border);
+
+    @media(min-width: 25rem) {
+        @include styleText($color-css-variable: --drum-machine-text);
+    }
+}
+
+.drum-pad {
+    @include styleText($color-css-variable:--drum-machine-text, $line-height: 0.4rem, $font-size: 0.4rem);
+    border: var(--drum-pad-border);
+    background-color: var(--drum-pad-background-color);
+}

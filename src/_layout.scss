@@ -1,0 +1,92 @@
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+h1 {
+    margin-bottom: 0.1rem;
+    // margin-left: 0.15rem;
+    padding: 0;
+    height: 5vh;
+}
+
+footer {
+    height: 3vh;
+
+    @media (min-width: 25rem) {
+        margin-top: 1rem;
+    }
+
+}
+
+#drum-machine {
+    @include flexContainer(column);
+
+    @media (min-width: 25rem) {
+        @include flexContainer(row);
+    }
+
+    @media (min-width: 37.5rem) {
+        width: 37rem;
+        @include flexContainer(row);
+
+        // to keep the drum machine centered
+        margin: 0 auto;
+    }
+}
+
+#display {
+    width: 53vw;
+    height: 12vh;
+    padding: 0;
+    margin: auto 0;
+    // margin-left: 0.15rem;
+
+    @media (min-width: 25rem) {
+        width: 40%;
+        margin: auto 1.2rem auto 1.5rem;
+    }
+
+    @media (min-width: 37.5rem) {
+        width: 14.375rem;
+        margin: auto 1.25rem auto 1rem;
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-items: center;
+    }
+}
+
+.drumpad-container {
+    width: 52vw;
+    height: 65vh;
+    padding: 0.125rem 0.3125rem 0.125rem 0.125rem;
+    margin: 0 0 0 1px;
+    @include gridContainer($num-columns-rows: 3, $row-height: 27%, $column-width: 33%, $gap: 0.1rem);
+
+    @media (min-width: 25rem) {
+        width: 50%;
+        margin-right: 1.5rem;
+        padding: 10px;
+    }
+
+    @media (min-width: 37.5rem) {
+        width: 24rem;
+        padding: 10px;
+        @include gridContainer(3, 6.25rem);
+    }
+}
+
+.drum-pad {
+    display: inline-block;
+    padding: 0 5px;
+
+    @media (min-width: 25rem) {}
+}

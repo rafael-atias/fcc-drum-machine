@@ -1,0 +1,13 @@
+html {
+    --body-background-color: ghostwhite;
+    --drum-machine-text: white;
+    --default-color-text: #383939;
+    --display-background-color: hsl(165, 32%, 55%);
+    --display-border: thin solid hsl(165, 25%, 35%);
+    --drum-pad-container-border: none;
+    --drum-pad-border: thin solid #457173;
+    --drum-pad-background-color: cadetblue;
+    --min-font-size-drumpad: 0.4rem;
+    --max-font-grow-drumpad: 0.4rem;
+    --small-breakpoint: 25rem;
+}
