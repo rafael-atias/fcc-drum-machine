@@ -1,35 +1,3 @@
-@mixin styleText($color-css-variable: null, $line-height: 0, $font-size: 1rem) {
-    text-align: center;
-    line-height: $line-height;
-    font-size: $font-size;
-
-    @if $color-css-variable !=null {
-        color: var($color-css-variable);
-    }
-}
-
-@mixin flexContainer($direction) {
-    display: flex;
-    flex-direction: $direction;
-    align-items: center;
-    justify-content: center;
-}
-
-@mixin gridContainer($num-columns-rows, $column-width, $gap: 0.3125rem, $row-height:none) {
-    display: grid;
-    grid-template-columns: repeat($num-columns-rows, $column-width);
-    grid-gap: $gap $gap;
-    gap: $gap $gap;
-
-    @if $row-height==none {
-        grid-template-rows: none;
-    }
-
-    @else {
-        grid-template-rows: repeat($num-columns-rows, $row-height);
-    }
-}
-
 // =============================================================================
 //
 //  PRECISE CONTROL OVER RESPONSIVE TYPOGRAPHY FOR SASS
@@ -74,4 +42,48 @@
     }
 
     @return $number;
+}
+
+@mixin styleText($color-css-variable: null,
+    $line-height: 0,
+    $min-font-size: 1rem,
+    $max-font-size: 0,
+    $min-viewport: 0,
+    $max-viewport: 0) {
+    text-align: center;
+    line-height: $line-height;
+
+    @if $max-font-size==0 or $min-viewport==0 or $max-viewport==0 {
+        font-size: $min-font-size;
+    }
+
+    @else {
+        @include fluid-type(font-size, $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+    }
+
+    @if $color-css-variable !=null {
+        color: var($color-css-variable);
+    }
+}
+
+@mixin flexContainer($direction) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin gridContainer($num-columns-rows, $column-width, $gap: 0.3125rem, $row-height:none) {
+    display: grid;
+    grid-template-columns: repeat($num-columns-rows, $column-width);
+    grid-gap: $gap $gap;
+    gap: $gap $gap;
+
+    @if $row-height==none {
+        grid-template-rows: none;
+    }
+
+    @else {
+        grid-template-rows: repeat($num-columns-rows, $row-height);
+    }
 }
