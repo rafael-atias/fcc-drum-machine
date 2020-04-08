@@ -50,15 +50,21 @@
     $max-font-size: 0,
     $min-viewport: 0,
     $max-viewport: 0) {
+
     text-align: center;
-    line-height: $line-height;
 
     @if $max-font-size==0 or $min-viewport==0 or $max-viewport==0 {
         font-size: $min-font-size;
     }
 
     @else {
-        @include fluid-type(font-size, $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+        @if $line-height !=0 {
+            @include fluid-type((font-size, line-height), $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+        }
+
+        @else {
+            @include fluid-type(font-size, $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+        }
     }
 
     @if $color-css-variable !=null {
