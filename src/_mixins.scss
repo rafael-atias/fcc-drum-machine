@@ -44,6 +44,7 @@
     @return $number;
 }
 
+
 @mixin styleText($color-css-variable: null,
     $line-height: 0,
     $min-font-size: 1rem,
@@ -59,11 +60,12 @@
 
     @else {
         @if $line-height !=0 {
-            @include fluid-type((font-size, line-height), $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+            @include fluid-type([font-size line-height], $min-viewport, $max-viewport, $min-font-size, $max-font-size);
         }
 
         @else {
             @include fluid-type(font-size, $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+            line-height: 0;
         }
     }
 

@@ -19,7 +19,12 @@ footer {
 }
 
 #display {
-    @include styleText($color-css-variable: --drum-machine-text, $min-font-size: 0.4rem);
+    @include styleText($color-css-variable: --drum-machine-text,
+        $min-font-size: 0.4rem,
+        $max-font-size: 0.8rem,
+        $min-viewport: 6.25rem,
+        $max-viewport: 24.99rem);
+
     background-color: var(--display-background-color);
     border: var(--display-border);
 
@@ -37,8 +42,8 @@ footer {
 }
 
 .drum-pad {
-    @include styleText($color-css-variable:--drum-machine-text, $line-height: 0.4rem, $min-font-size: 0.4rem);
-    @include fluid-type(font-size, 6.25rem, 25rem, 0.4rem, 0.8rem);
+    @include styleText($color-css-variable:--drum-machine-text, $line-height: 0.4rem, $min-font-size: 0.4rem, $max-font-size: 0.8rem, $min-viewport: 6.25rem, $max-viewport: 24.99rem);
+
     border: var(--drum-pad-border);
     background-color: var(--drum-pad-background-color);
 }

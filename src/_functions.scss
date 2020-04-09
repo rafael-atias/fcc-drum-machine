@@ -1,0 +1,27 @@
+// returns true if the given string is a CSS var
+@function _is-CSS-var($variable) {
+    // not 0 based!!!
+    @return str-slice(quote($variable), 1, 2)=="--";
+}
+
+// returns the given CSS variable. You can pass in
+// the CSS variable with or without --
+// If the second parameter is passed in, 
+// the function returns the value 
+// of the variable, **not** the variable itself
+
+@function get-value-from-CSS-var($var, $should-return-value: false) {
+    @if $should-return-value==false {
+        @if _is-CSS-var($var)==true {
+            @return var(#{$var});
+        }
+
+        @else {
+            @return var(--#{$var});
+        }
+    }
+
+    @else {
+        @return map-get($variables, $var);
+    }
+}
