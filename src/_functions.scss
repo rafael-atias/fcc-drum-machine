@@ -1,27 +1,103 @@
 // returns true if the given string is a CSS var
-@function _is-CSS-var($variable) {
-    // not 0 based!!!
-    @return str-slice(quote($variable), 1, 2)=="--";
+@function is-CSS-var($variable) {
+    @if type-of($variable)=="string" {
+        // not 0 based!!!
+        @return str-slice(quote($variable), 1, 2)=="--";
+    }
+
+    @return false;
 }
 
-// returns the given CSS variable. You can pass in
-// the CSS variable with or without --
-// If the second parameter is passed in, 
-// the function returns the value 
-// of the variable, **not** the variable itself
+// returns the given CSS variable ´
+// from the $variables map. If passed 
+// the second parameter, it returns the value
+// of the variable
+@function get-val($var, $should-return-value: false) {
+    $v: "";
 
-@function get-value-from-CSS-var($var, $should-return-value: false) {
-    @if $should-return-value==false {
-        @if _is-CSS-var($var)==true {
-            @return var(#{$var});
-        }
-
-        @else {
-            @return var(--#{$var});
-        }
+    @if is-CSS-var($var)==true {
+        $v: str-slice($var, 3);
     }
 
     @else {
-        @return map-get($variables, $var);
+        $v: $var;
+    }
+
+    @if $should-return-value==false {
+        @return var(--#{$v});
+    }
+
+    @else {
+        @return map-get($variables, $v);
+    }
+}
+
+// consumes 2 lists and returns a map; the first list will 
+// provide the keys and the second the values
+@function create-map($keys, $values) {
+    $map: ();
+
+    @for $i from 1 through length($values) {
+        $map: map-merge($map, (nth($keys, $i): nth($values, $i)));
+    }
+
+    @return $map;
+}
+
+// consumes a map and produces the conditions for an @media rule
+@function append-lists-to-query($map) {
+    $result: "";
+
+    @each $property,
+    $breakpoint in $map {
+        @if $result=="" {
+            $result: "(#{$property}: #{$breakpoint}) ";
+        }
+
+        @else {
+            $result: "#{$result} and (#{$property}: #{$breakpoint})";
+        }
+    }
+
+    @return $result;
+}
+
+// consumes a map and a predicate and returns true if at least
+// one value in the map satisfies that condition; otherwise, 
+// it returns false
+@function map-ormap($map, $predicate) {
+
+    @each $key,
+    $value in $map {
+        @if call($predicate, $value)==true {
+            @return true;
+        }
+    }
+
+    @return false;
+}
+
+// applies the given function to every key-value pair 
+// in the given map and returns a new map
+@function map-fmap($map, $fn) {
+    $result: ();
+
+    @each $key,
+    $value in $map {
+        $result: map-merge($result, call($fn, $key, $value));
+    }
+
+    @return $result;
+}
+
+// consumes a key and a value from a map and
+// applies get-val to the given value
+@function get-val-in-map($key, $value) {
+    @if is-CSS-var($value)==true {
+        @return ($key: get-val($var: $value, $should-return-value: true));
+    }
+
+    @else {
+        @return ($key: $value);
     }
 }

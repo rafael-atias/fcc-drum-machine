@@ -3,6 +3,7 @@
 //  PRECISE CONTROL OVER RESPONSIVE TYPOGRAPHY FOR SASS
 //  ---------------------------------------------------
 //  Indrek Paas @indrekpaas
+//  @see https://gist.github.com/indrekpaas/7f22e44ace49b5124eec
 //
 //  Inspired by Mike Riethmuller's Precise control over responsive typography
 //  https://www.madebymike.com.au/writing/precise-control-responsive-typography/
@@ -45,7 +46,7 @@
 }
 
 
-@mixin styleText($color-css-variable: null,
+@mixin styleText($color-css: null,
     $line-height: 0,
     $min-font-size: 1rem,
     $max-font-size: 0,
@@ -69,8 +70,8 @@
         }
     }
 
-    @if $color-css-variable !=null {
-        color: var($color-css-variable);
+    @if $color-css !=null {
+        color: get-value-from-CSS-var($color-css);
     }
 }
 
@@ -93,5 +94,29 @@
 
     @else {
         grid-template-rows: repeat($num-columns-rows, $row-height);
+    }
+}
+
+// builds an @media rule. The data to write the condition
+// can be passed as 
+// - 2 lists: one of properties and one of values, or
+// - a map
+@mixin create-media-query($properties: (), $values: (), $map: null) {
+    @if $map !=null {
+        $m: ();
+
+        @if map-ormap($map: $map, $predicate: is-CSS-var)==true {
+            $m: map-fmap($map: $map, $fn: get-val-in-map);
+        }
+
+        @media #{append-lists-to-query($m)} {
+            @content;
+        }
+    }
+
+    @else {
+        @media #{append-lists-to-query(create-map($properties, $values))} {
+            @content;
+        }
     }
 }
