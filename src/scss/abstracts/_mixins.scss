@@ -71,7 +71,7 @@
     }
 
     @if $color-css !=null {
-        color: get-value-from-CSS-var($color-css);
+        color: get-val($color-css);
     }
 }
 
@@ -97,16 +97,20 @@
     }
 }
 
-// builds an @media rule. The data to write the condition
-// can be passed as 
-// - 2 lists: one of properties and one of values, or
-// - a map
-@mixin create-media-query($properties: (), $values: (), $map: null) {
+// creates an @media rule with 2 lists
+@mixin create-media-query-with-lists($properties, $values) {
+    @include create-media-query-with-map(create-map($properties, $values)) {
+        @content;
+    }
+}
+
+// creates an @media rule from a map
+@mixin create-media-query-with-map($map) {
     @if $map !=null {
         $m: ();
 
-        @if map-ormap($map: $map, $predicate: is-CSS-var)==true {
-            $m: map-fmap($map: $map, $fn: get-val-in-map);
+        @if ormap($map, is-CSS-var)==true {
+            $m: fmap($map, get-val-in-map);
         }
 
         @media #{append-lists-to-query($m)} {
@@ -115,8 +119,6 @@
     }
 
     @else {
-        @media #{append-lists-to-query(create-map($properties, $values))} {
-            @content;
-        }
+        @error "Invalid parameter. The given map is null";
     }
 }

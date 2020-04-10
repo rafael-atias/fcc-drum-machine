@@ -1,0 +1,10 @@
+header h1 {
+    /* layout rules */
+    margin-bottom: 0.1rem;
+    // margin-left: 0.15rem;
+    padding: 0;
+    height: 5vh;
+
+    /* style rules */
+    @include styleText($color-css: --default-color-text, $min-font-size: 0.5rem);
+}

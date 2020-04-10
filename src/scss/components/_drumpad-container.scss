@@ -1,0 +1,28 @@
+.drumpad-container {
+    /* layout rules */
+    width: 52vw;
+    height: 65vh;
+    padding: 0.125rem 0.3125rem 0.125rem 0.125rem;
+    margin: 0 0 0 1px;
+    @include gridContainer($num-columns-rows: 3, $row-height: 27%, $column-width: 33%, $gap: 0.1rem);
+
+    /* style rules */
+    border: get-val(--drum-pad-container-border);
+
+    @include create-media-query-with-lists(min-width, --small-breakpoint) {
+        /* layout rules */
+        width: 50%;
+        margin-right: 1.5rem;
+        padding: 10px;
+
+        /* style rules */
+        @include styleText($color-css: --drum-machine-text);
+    }
+
+    @include create-media-query-with-lists(min-width, --medium-breakpoint) {
+        /* layout rules */
+        width: 24rem;
+        padding: 10px;
+        @include gridContainer(3, 6.25rem);
+    }
+}

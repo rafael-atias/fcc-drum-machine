@@ -1,0 +1,35 @@
+#display {
+    /* layout rules */
+    width: 53vw;
+    height: 12vh;
+    padding: 0;
+    margin: auto 0;
+    // margin-left: 0.15rem;
+
+    /* style rules */
+    @include styleText($color-css: --drum-machine-text,
+        $min-font-size: 0.4rem,
+        $max-font-size: 0.8rem,
+        $min-viewport: 6.25rem,
+        $max-viewport: 24.99rem);
+
+    background-color: get-val(--display-background-color);
+    border: get-val(--display-border);
+
+    @include create-media-query-with-lists(min-width, --small-breakpoint) {
+        /* layout rules */
+        width: 40%;
+        margin: auto 1.2rem auto 1.5rem;
+
+        @include styleText($color-css: --drum-machine-text);
+    }
+
+    @include create-media-query-with-lists(min-width, --medium-breakpoint) {
+        /* layout rules */
+        width: 14.375rem;
+        margin: auto 1.25rem auto 1rem;
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-items: center;
+    }
+}

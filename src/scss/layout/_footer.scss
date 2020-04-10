@@ -1,0 +1,16 @@
+footer {
+    /* layout rules */
+    height: 3vh;
+
+    /* style rules */
+    @include styleText($color-css: --default-color-text, $min-font-size: 0.2rem);
+
+    @include create-media-query-with-map((min-width: --small-breakpoint)) {
+        /* layout rules */
+        margin-top: 1rem;
+
+        /* style rules */
+        @include styleText($color-css: --default-color-text);
+    }
+
+}
