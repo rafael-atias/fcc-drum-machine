@@ -16,7 +16,7 @@
     background-color: get-val(--display-background-color);
     border: get-val(--display-border);
 
-    @include create-media-query-with-lists(min-width, --small-breakpoint) {
+    @include create-media-query(min-width, --small-breakpoint) {
         /* layout rules */
         width: 40%;
         margin: auto 1.2rem auto 1.5rem;
@@ -24,7 +24,7 @@
         @include styleText($color-css: --drum-machine-text);
     }
 
-    @include create-media-query-with-lists(min-width, --medium-breakpoint) {
+    @include create-media-query(min-width, --medium-breakpoint) {
         /* layout rules */
         width: 14.375rem;
         margin: auto 1.25rem auto 1rem;

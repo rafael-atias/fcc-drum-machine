@@ -9,7 +9,7 @@
     /* style rules */
     border: get-val(--drum-pad-container-border);
 
-    @include create-media-query-with-lists(min-width, --small-breakpoint) {
+    @include create-media-query(min-width, --small-breakpoint) {
         /* layout rules */
         width: 50%;
         margin-right: 1.5rem;
@@ -19,7 +19,7 @@
         @include styleText($color-css: --drum-machine-text);
     }
 
-    @include create-media-query-with-lists(min-width, --medium-breakpoint) {
+    @include create-media-query(min-width, --medium-breakpoint) {
         /* layout rules */
         width: 24rem;
         padding: 10px;

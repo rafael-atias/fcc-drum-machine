@@ -2,11 +2,11 @@
     /* layout rules */
     @include flexContainer(column);
 
-    @include create-media-query-with-lists(min-width, --small-breakpoint) {
+    @include create-media-query(min-width, --small-breakpoint) {
         @include flexContainer(row);
     }
 
-    @include create-media-query-with-lists(min-width, --medium-breakpoint) {
+    @include create-media-query(min-width, --medium-breakpoint) {
         /* layout rules */
         width: 37rem;
         @include flexContainer(row);

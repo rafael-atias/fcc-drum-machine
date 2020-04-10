@@ -45,6 +45,7 @@
     @return $number;
 }
 
+// ========================
 
 @mixin styleText($color-css: null,
     $line-height: 0,
@@ -98,14 +99,14 @@
 }
 
 // creates an @media rule with 2 lists
-@mixin create-media-query-with-lists($properties, $values) {
-    @include create-media-query-with-map(create-map($properties, $values)) {
+@mixin create-media-query($properties, $values) {
+    @include _create-media-query-helper(create-map($properties, $values)) {
         @content;
     }
 }
 
 // creates an @media rule from a map
-@mixin create-media-query-with-map($map) {
+@mixin _create-media-query-helper($map) {
     @if $map !=null {
         $m: ();
 
