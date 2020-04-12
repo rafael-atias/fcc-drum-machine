@@ -1,4 +1,7 @@
 import React from 'react';
+import Display from "./Display";
+import Drumpad from "./Drumpad";
+import drumpadData from "./drumpadData";
 import './App.scss';
 
 export default function App() {
@@ -7,52 +10,24 @@ export default function App() {
       <header>
         <h1>Drum machine</h1>
       </header>
-      <section id="drum-machine">
-        <div id="display">
-          <p>Q</p>
-        </div>
+      <section data-testid="drum-machine" id="drum-machine">
+        <Display value="" />
         <section className="drumpad-container">
-          <div className="drum-pad">
-            <p>Q</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>W</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>E</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>A</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>S</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>D</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>Z</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>X</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
-          <div className="drum-pad">
-            <p>C</p>
-            <audio src="#" className="clip" id=""></audio>
-          </div>
+          {drumpadData()
+            .map(function (obj, index) {
+              return <Drumpad
+                key={`${obj.id}${index}`}
+                id={obj.id}
+                textContent={obj.textContent}
+                audioSrc={obj.audioSrc}
+              />
+            })
+          }
         </section>
       </section>
       <footer>
         <small>Sounds courtesy of Zapstan.com</small>
       </footer>
-    </article>
+    </article >
   );
 }
