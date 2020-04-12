@@ -4,7 +4,7 @@
 
 import React from "react";
 import { render } from "@testing-library/react";
-import Drumpad from "./Drumpad";
+import Drumpad from "../components/Drumpad";
 
 const DP = <Drumpad
     id="swipeHigh"
