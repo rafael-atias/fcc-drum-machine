@@ -4,7 +4,7 @@
 
 import React from "react";
 import { render } from "@testing-library/react";
-import Audio from "./Audio";
+import Audio from "../components/Audio";
 
 const audioComponent = <Audio
     src="https://www.dropbox.com/s/xmys6drdqbvlnd6/dustyroom_cartoon_swipe_high_pitched.mp3?raw=1"
