@@ -2,7 +2,6 @@ import React from 'react';
 import Display from "./Display";
 import Drumpad from "./Drumpad";
 import drumpadData from "./drumpadData";
-//import './App.scss';
 
 export default function App() {
   return (
