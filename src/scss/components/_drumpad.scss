@@ -1,0 +1,19 @@
+.drum-pad {
+    /* layout rules */
+    display: inline-block;
+    padding: 0 5px;
+    @include flexContainer(column);
+
+    /* style rules */
+    @include styleText(
+        $color-css:--drum-machine-text,
+        //$line-height: 0.4rem,
+        $min-font-size: 0.4rem,
+        $max-font-size: 1rem,
+        $min-viewport: 6.25rem,
+        $max-viewport: 24.99rem
+    );
+
+    border: get-val(--drum-pad-border);
+    background-color: get-val(--drum-pad-background-color);
+}

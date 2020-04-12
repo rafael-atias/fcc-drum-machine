@@ -1,0 +1,124 @@
+// returns true if the given string is a CSS var
+@function is-CSS-var($variable) {
+    @if type-of($variable)=="string" {
+        // not 0 based!!!
+        @return str-slice(quote($variable), 1, 2) == "--";
+    }
+
+    @return false;
+}
+
+// returns the given CSS variable ´
+// from the $variables map. If passed 
+// the second parameter, it returns the value
+// of the variable
+@function get-val($var, $should-return-value: false) {
+    $v: "";
+
+    @if is-CSS-var($var) == true {
+        $v: str-slice($var, 3);
+    } @else {
+        $v: $var;
+    }
+
+    @if $should-return-value == false {
+        @return var(--#{$v});
+    } @else {
+        @return map-get($variables, $v);
+    }
+}
+
+// consumes 2 lists and returns a map; the first list will 
+// provide the keys and the second the values
+@function create-map($keys, $values) {
+    $map: ();
+
+    @for $i from 1 through length($values) {
+        $map: map-merge($map, (nth($keys, $i): nth($values, $i)));
+    }
+
+    @return $map;
+}
+
+// consumes a map and produces the conditions for an @media rule
+@function append-lists-to-query($map) {
+    $result: "";
+
+    @each $property, $breakpoint in $map {
+        @if $result=="" {
+            $result: "(#{$property}: #{$breakpoint}) ";
+        } @else {
+            $result: "#{$result} and (#{$property}: #{$breakpoint})";
+        }
+    }
+
+    @return $result;
+}
+
+// consumes a collection (map or list) and a predicate
+// and returns true if at least one value in
+// the given collection satisfies that condition; 
+// otherwise, it returns false
+@function ormap($collection, $predicate) {
+
+    @if type-of($collection) == "map" {
+        @each $key, $value in $collection {
+            @if call(get-function($predicate), $value) == true {
+                @return true;
+            }
+        }
+
+        @return false;
+    }
+
+    @if type-of($collection) == "list" {
+        @each $value in $collection {
+            @if call(get-function($predicate), $value) == true {
+                @return true;
+            }
+        }
+
+        @return false;
+    }
+
+    @error "Invalid parameter. Ormap should receive a map or a list as a first parameter";
+}
+
+// applies the given function to every member 
+// in the given collection (map or list) 
+// and returns a new collection
+@function fmap($collection, $fn) {
+    $result: ();
+
+    @if type-of($collection) == "map" {
+        @each $key, $value in $collection {
+            $result: map-merge($result,
+                    call(get-function($fn), $key, $value));
+        }
+
+        @return $result;
+    }
+
+    @if type-of($collection) == "list" {
+        @each $value in $collection {
+            $result: append(
+                $result,
+                call(get-function($fn), $value)
+            );
+        }
+
+        @return $result;
+    }
+
+    @error "Invalid parameter. Ormap should receive a map or a list as a first parameter";
+}
+
+// consumes a key and a value from a map and
+// applies get-val to the given value
+@function get-val-in-map($key, $value) {
+    @if is-CSS-var($value) == true {
+        @return ($key: get-val($var: $value, $should-return-value: true));
+    } @else {
+        @return ($key: $value);
+    }
+}

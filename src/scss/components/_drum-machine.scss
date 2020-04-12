@@ -1,0 +1,17 @@
+#drum-machine {
+    /* layout rules */
+    @include flexContainer(column);
+
+    @include create-media-query(min-width, --small-breakpoint) {
+        @include flexContainer(row);
+    }
+
+    @include create-media-query(min-width, --medium-breakpoint) {
+        /* layout rules */
+        width: 37rem;
+        @include flexContainer(row);
+
+        /* to keep the drum machine centered */
+        margin: 0 auto;
+    }
+}

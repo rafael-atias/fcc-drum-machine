@@ -1,0 +1,138 @@
+// =============================================================================
+//
+//  PRECISE CONTROL OVER RESPONSIVE TYPOGRAPHY FOR SASS
+//  ---------------------------------------------------
+//  Indrek Paas @indrekpaas
+//  @see https://gist.github.com/indrekpaas/7f22e44ace49b5124eec
+//
+//  Inspired by Mike Riethmuller's Precise control over responsive typography
+//  https://www.madebymike.com.au/writing/precise-control-responsive-typography/
+//
+//  Borrowed `strip-unit` function from Hugo Giraudel
+//  https://css-tricks.com/snippets/sass/strip-unit-function/
+//
+//  02.04.2018 Remove `screen` keyword from media queries
+//  11.08.2016 Remove redundant `&` self-reference
+//  31.03.2016 Remove redundant parenthesis from output
+//  02.10.2015 Add support for multiple properties
+//  24.04.2015 Initial release
+//
+// =============================================================================
+
+@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
+    @each $property in $properties {
+        #{$property}: $min-value;
+    }
+
+    @media (min-width: $min-vw) {
+        @each $property in $properties {
+            #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+        }
+    }
+
+    @media (min-width: $max-vw) {
+        @each $property in $properties {
+            #{$property}: $max-value;
+        }
+    }
+}
+
+@function strip-unit($number) {
+    @if type-of($number) == "number" and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+// ========================
+
+@mixin styleText(
+    $color-css: null,
+    $line-height: 0,
+    $min-font-size: 1rem,
+    $max-font-size: 0,
+    $min-viewport: 0,
+    $max-viewport: 0
+) {
+
+    text-align: center;
+
+    @if $max-font-size == 0 or $min-viewport == 0 or $max-viewport == 0 {
+        font-size: $min-font-size;
+    } @else {
+        @if $line-height != 0 {
+            @include fluid-type(
+                [font-size line-height], 
+                $min-viewport, 
+                $max-viewport, 
+                $min-font-size, 
+                $max-font-size
+            );
+        } @else {
+            @include fluid-type(
+                font-size, 
+                $min-viewport, 
+                $max-viewport, 
+                $min-font-size, 
+                $max-font-size
+            );
+            line-height: 0;
+        }
+    }
+
+    @if $color-css != null {
+        color: get-val($color-css);
+    }
+}
+
+@mixin flexContainer($direction) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin gridContainer(
+    $num-columns-rows: 3, 
+    $column-width: 33%, 
+    $gap: 0.3125rem, 
+    $row-height:none
+) {
+    display: grid;
+    grid-template-columns: repeat($num-columns-rows, $column-width);
+    grid-gap: $gap $gap;
+    gap: $gap $gap;
+
+    @if $row-height == none {
+        grid-template-rows: none;
+    } @else {
+        grid-template-rows: repeat($num-columns-rows, $row-height);
+    }
+}
+
+// creates an @media rule with 2 lists
+@mixin create-media-query($properties, $values) {
+    @include _create-media-query-helper(create-map($properties, $values)) {
+        @content;
+    }
+}
+
+// creates an @media rule from a map
+@mixin _create-media-query-helper($map) {
+    @if $map != null {
+        $m: ();
+
+        @if ormap($map, is-CSS-var) == true {
+            $m: fmap($map, get-val-in-map);
+        } @else {
+            $m: $map;
+        }
+
+        @media #{append-lists-to-query($m)} {
+            @content;
+        }
+    } @else {
+        @error "Invalid parameter. The given map is null";
+    }
+}

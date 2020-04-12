@@ -1,0 +1,26 @@
+footer {
+    /* layout rules */
+    height: 3vh;
+    @include flexContainer(column);
+
+    /* style rules */
+    @include styleText(
+        $color-css: --default-color-text, 
+        $min-font-size: 0.2rem,
+        $max-font-size: 0.8rem,
+        $min-viewport: 6.25rem,
+        $max-viewport: 24.99rem
+    );
+
+    @include create-media-query(min-width, --small-breakpoint) {
+        /* layout rules */
+        margin-top: 1rem;
+
+        /* style rules */
+        @include styleText(
+            $color-css: --default-color-text,
+            $min-font-size: 0.8rem
+        );
+    }
+
+}
