@@ -2,7 +2,7 @@
 @function is-CSS-var($variable) {
     @if type-of($variable)=="string" {
         // not 0 based!!!
-        @return str-slice(quote($variable), 1, 2)=="--";
+        @return str-slice(quote($variable), 1, 2) == "--";
     }
 
     @return false;
@@ -15,19 +15,15 @@
 @function get-val($var, $should-return-value: false) {
     $v: "";
 
-    @if is-CSS-var($var)==true {
+    @if is-CSS-var($var) == true {
         $v: str-slice($var, 3);
-    }
-
-    @else {
+    } @else {
         $v: $var;
     }
 
-    @if $should-return-value==false {
+    @if $should-return-value == false {
         @return var(--#{$v});
-    }
-
-    @else {
+    } @else {
         @return map-get($variables, $v);
     }
 }
@@ -48,13 +44,10 @@
 @function append-lists-to-query($map) {
     $result: "";
 
-    @each $property,
-    $breakpoint in $map {
+    @each $property, $breakpoint in $map {
         @if $result=="" {
             $result: "(#{$property}: #{$breakpoint}) ";
-        }
-
-        @else {
+        } @else {
             $result: "#{$result} and (#{$property}: #{$breakpoint})";
         }
     }
@@ -67,11 +60,10 @@
 // the given collection satisfies that condition; 
 // otherwise, it returns false
 @function ormap($collection, $predicate) {
-    @if type-of($collection)=="map" {
 
-        @each $key,
-        $value in $collection {
-            @if call(get-function($predicate), $value)==true {
+    @if type-of($collection) == "map" {
+        @each $key, $value in $collection {
+            @if call(get-function($predicate), $value) == true {
                 @return true;
             }
         }
@@ -79,9 +71,9 @@
         @return false;
     }
 
-    @if type-of($collection)=="list" {
+    @if type-of($collection) == "list" {
         @each $value in $collection {
-            @if call(get-function($predicate), $value)==true {
+            @if call(get-function($predicate), $value) == true {
                 @return true;
             }
         }
@@ -98,10 +90,8 @@
 @function fmap($collection, $fn) {
     $result: ();
 
-    @if type-of($collection)=="map" {
-
-        @each $key,
-        $value in $collection {
+    @if type-of($collection) == "map" {
+        @each $key, $value in $collection {
             $result: map-merge($result,
                     call(get-function($fn), $key, $value));
         }
@@ -109,10 +99,12 @@
         @return $result;
     }
 
-    @if type-of($collection)=="list" {
+    @if type-of($collection) == "list" {
         @each $value in $collection {
-            $result: append($result,
-                    call(get-function($fn), $value));
+            $result: append(
+                $result,
+                call(get-function($fn), $value)
+            );
         }
 
         @return $result;
@@ -124,11 +116,9 @@
 // consumes a key and a value from a map and
 // applies get-val to the given value
 @function get-val-in-map($key, $value) {
-    @if is-CSS-var($value)==true {
+    @if is-CSS-var($value) == true {
         @return ($key: get-val($var: $value, $should-return-value: true));
-    }
-
-    @else {
+    } @else {
         @return ($key: $value);
     }
 }

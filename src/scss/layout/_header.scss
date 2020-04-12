@@ -5,6 +5,32 @@ header h1 {
     padding: 0;
     height: 5vh;
 
+    $max-vw-sm: get-val($var: --small-breakpoint, $should-return-value: true) - 0.1rem;
     /* style rules */
-    @include styleText($color-css: --default-color-text, $min-font-size: 0.5rem);
+    @include styleText(
+        $color-css: --default-color-text,
+        $line-height: 0.3rem,
+        $min-font-size: 0.5rem,
+        $max-font-size: 1rem,
+        $min-viewport: 6.25rem,
+        $max-viewport:  get-val($var: --small-breakpoint, $should-return-value: true) - 0.1rem
+    );
+
+    @include create-media-query(
+        (min-width max-width), 
+        (18.75rem get-val($var: --small-breakpoint, $should-return-value: true) - 0.1rem)) {
+        margin-bottom: 0.35rem;
+    }
+
+    @include create-media-query(min-width, --small-breakpoint) {
+        @include styleText(
+            $color-css: --default-color-text,
+            $min-font-size: 1rem,
+            $max-font-size: 1.6rem,
+            $min-viewport: 25rem,
+            $max-viewport: get-val($var: --medium-breakpoint, $should-return-value: true) - 0.1rem
+        );
+        margin-bottom: 0;
+        margin-top: 1.2rem;
+    }
 }

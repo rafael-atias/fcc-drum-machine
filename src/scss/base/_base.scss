@@ -6,8 +6,7 @@ html {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 
-    @each $key,
-    $val in $variables {
+    @each $key, $val in $variables {
         --#{$key}: #{$val};
     }
 }

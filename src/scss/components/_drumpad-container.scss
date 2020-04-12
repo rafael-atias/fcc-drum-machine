@@ -4,16 +4,32 @@
     height: 65vh;
     padding: 0.125rem 0.3125rem 0.125rem 0.125rem;
     margin: 0 0 0 1px;
-    @include gridContainer($num-columns-rows: 3, $row-height: 27%, $column-width: 33%, $gap: 0.1rem);
+    @include gridContainer(
+        $row-height: 27%, 
+        $gap: 0.1rem
+    );
 
     /* style rules */
     border: get-val(--drum-pad-container-border);
+
+    @include create-media-query(
+        (min-width max-width), 
+        (18.75rem get-val($var: --small-breakpoint, $should-return-value: true) - 0.1rem)) {
+        @include gridContainer(
+            $row-height: 27%, 
+            $gap: 0.2rem
+        );
+    }
 
     @include create-media-query(min-width, --small-breakpoint) {
         /* layout rules */
         width: 50%;
         margin-right: 1.5rem;
         padding: 10px;
+        @include gridContainer(
+            $row-height: 27%, 
+            $gap: 0.3rem
+        );
 
         /* style rules */
         @include styleText($color-css: --drum-machine-text);
@@ -23,6 +39,6 @@
         /* layout rules */
         width: 24rem;
         padding: 10px;
-        @include gridContainer(3, 6.25rem);
+        @include gridContainer($column-width: 6.25rem);
     }
 }

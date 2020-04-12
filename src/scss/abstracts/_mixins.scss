@@ -38,7 +38,7 @@
 }
 
 @function strip-unit($number) {
-    @if type-of($number)=="number"and not unitless($number) {
+    @if type-of($number) == "number" and not unitless($number) {
         @return $number / ($number * 0 + 1);
     }
 
@@ -47,31 +47,41 @@
 
 // ========================
 
-@mixin styleText($color-css: null,
+@mixin styleText(
+    $color-css: null,
     $line-height: 0,
     $min-font-size: 1rem,
     $max-font-size: 0,
     $min-viewport: 0,
-    $max-viewport: 0) {
+    $max-viewport: 0
+) {
 
     text-align: center;
 
-    @if $max-font-size==0 or $min-viewport==0 or $max-viewport==0 {
+    @if $max-font-size == 0 or $min-viewport == 0 or $max-viewport == 0 {
         font-size: $min-font-size;
-    }
-
-    @else {
-        @if $line-height !=0 {
-            @include fluid-type([font-size line-height], $min-viewport, $max-viewport, $min-font-size, $max-font-size);
-        }
-
-        @else {
-            @include fluid-type(font-size, $min-viewport, $max-viewport, $min-font-size, $max-font-size);
+    } @else {
+        @if $line-height != 0 {
+            @include fluid-type(
+                [font-size line-height], 
+                $min-viewport, 
+                $max-viewport, 
+                $min-font-size, 
+                $max-font-size
+            );
+        } @else {
+            @include fluid-type(
+                font-size, 
+                $min-viewport, 
+                $max-viewport, 
+                $min-font-size, 
+                $max-font-size
+            );
             line-height: 0;
         }
     }
 
-    @if $color-css !=null {
+    @if $color-css != null {
         color: get-val($color-css);
     }
 }
@@ -83,17 +93,20 @@
     justify-content: center;
 }
 
-@mixin gridContainer($num-columns-rows, $column-width, $gap: 0.3125rem, $row-height:none) {
+@mixin gridContainer(
+    $num-columns-rows: 3, 
+    $column-width: 33%, 
+    $gap: 0.3125rem, 
+    $row-height:none
+) {
     display: grid;
     grid-template-columns: repeat($num-columns-rows, $column-width);
     grid-gap: $gap $gap;
     gap: $gap $gap;
 
-    @if $row-height==none {
+    @if $row-height == none {
         grid-template-rows: none;
-    }
-
-    @else {
+    } @else {
         grid-template-rows: repeat($num-columns-rows, $row-height);
     }
 }
@@ -107,19 +120,19 @@
 
 // creates an @media rule from a map
 @mixin _create-media-query-helper($map) {
-    @if $map !=null {
+    @if $map != null {
         $m: ();
 
-        @if ormap($map, is-CSS-var)==true {
+        @if ormap($map, is-CSS-var) == true {
             $m: fmap($map, get-val-in-map);
+        } @else {
+            $m: $map;
         }
 
         @media #{append-lists-to-query($m)} {
             @content;
         }
-    }
-
-    @else {
+    } @else {
         @error "Invalid parameter. The given map is null";
     }
 }

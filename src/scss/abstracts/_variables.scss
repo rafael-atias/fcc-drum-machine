@@ -1,19 +1,30 @@
-$backgrounds: (body-background-color: ghostwhite,
+$backgrounds: (
+    body-background-color: ghostwhite,
     display-background-color: hsl(165, 32%, 55%),
-    drum-pad-background-color: cadetblue);
+    drum-pad-background-color: cadetblue
+);
 
-$border-styles: (display-border: thin solid hsl(165, 25%, 35%),
+$border-styles: (
+    display-border: thin solid hsl(165, 25%, 35%),
     drum-pad-container-border: none,
-    drum-pad-border: thin solid #457173);
+    drum-pad-border: thin solid #457173
+);
 
-$text-styles: (default-color-text: #383939,
+$text-styles: (
+    default-color-text: #383939,
     drum-machine-text: white,
     min-font-size-drumpad-sm: 0.4rem,
     max-font-size-drumpad-sm: 0.4rem,
     min-font-size-drumpad-md: 0.4rem,
-    max-font-size-drumpad-md: 0.4rem);
+    max-font-size-drumpad-md: 0.4rem
+);
 
-$breakpoints: (small-breakpoint: 25rem, medium-breakpoint: 37.5rem);
+$breakpoints: (
+    small-breakpoint: 25rem, 
+    medium-breakpoint: 37.5rem
+);
 
-$variables: map-merge(map-merge($backgrounds, $border-styles),
-    map-merge($text-styles, $breakpoints));
+$variables: map-merge(
+    map-merge($backgrounds, $border-styles),
+    map-merge($text-styles, $breakpoints)
+);
