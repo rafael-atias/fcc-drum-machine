@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import App from '../components/App';
 
 test('renders a #drum-machine element', () => {
@@ -32,15 +32,42 @@ test("App contains 9 drum pads", function () {
   expect(getByText("C")).toBeInTheDocument();
 });
 
-// test("App contains 3 drumpad rows", function () {
-//   const { getByTestId } = render(<App />);
+test("When a drum pad is clicked, the #display element should show the letter contained in the clicked drum pad", function () {
+  const { getByTestId } = render(<App />);
 
-//   const firstRow = getByTestId("row0");
-//   const secondRow = getByTestId("row1");
-//   const thirdRow = getByTestId("row2");
+  const click = new MouseEvent("click", { bubbles: true, cancelable: false });
 
-//   expect(firstRow.className).toBe("row");
-//   expect(secondRow.className).toBe("row");
-//   expect(thirdRow.className).toBe("row");
+  // text content of elements
+  const shText = getByTestId("swipeHigh").textContent;
+  const dchText = getByTestId("dogConfusedHuh").textContent;
 
-// });
+  // first click
+  fireEvent(getByTestId("swipeHigh"), click);
+
+  expect(getByTestId("display").textContent).toBe(shText);
+
+  // with the second click, the content should be updated
+  fireEvent(getByTestId("dogConfusedHuh"), click);
+
+  expect(getByTestId("display").textContent).toBe(dchText);
+});
+
+test("When the p element child of a drum-pad is clicked, the #display element should show the letter contained in the clicked drum pad", function () {
+  const { getByTestId } = render(<App />);
+
+  const click = new MouseEvent("click", { bubbles: true, cancelable: false });
+
+  // text content of elements
+  const shText = getByTestId("swipeHigh").textContent;
+  const dchText = getByTestId("dogConfusedHuh").textContent;
+
+  // first click
+  fireEvent(getByTestId("swipeHigh").firstElementChild, click);
+
+  expect(getByTestId("display").textContent).toBe(shText);
+
+  // with the second click, the display content should be updated
+  fireEvent(getByTestId("dogConfusedHuh").firstElementChild, click);
+
+  expect(getByTestId("display").textContent).toBe(dchText);
+});
