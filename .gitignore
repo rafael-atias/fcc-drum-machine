@@ -8,6 +8,7 @@
 # public
 /public/*
 !/public/index.html
+!/public/sounds/
 
 # testing
 /coverage

@@ -5,6 +5,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import App from '../components/App';
+import Drumpad from "../components/Drumpad";
+import drumpadData from "../components/drumpadData";
 
 test('renders a #drum-machine element', () => {
   const { getByTestId } = render(<App />);
@@ -33,41 +35,57 @@ test("App contains 9 drum pads", function () {
 });
 
 test("When a drum pad is clicked, the #display element should show the letter contained in the clicked drum pad", function () {
-  const { getByTestId } = render(<App />);
+  //setting up the stub
+  window.HTMLAudioElement.prototype.play = function () {
+    return Promise.resolve();
+  }
 
-  const click = new MouseEvent("click", { bubbles: true, cancelable: false });
+  try {
+    const { getByTestId } = render(<App />);
 
-  // text content of elements
-  const shText = getByTestId("swipeHigh").textContent;
-  const dchText = getByTestId("dogConfusedHuh").textContent;
+    // text content of elements
+    const shText = getByTestId("swipeHigh").textContent;
+    const dchText = getByTestId("dogConfusedHuh").textContent;
 
-  // first click
-  fireEvent(getByTestId("swipeHigh"), click);
+    // first click
+    fireEvent.click(getByTestId("swipeHigh"));
 
-  expect(getByTestId("display").textContent).toBe(shText);
+    expect(getByTestId("display").textContent).toBe(shText);
 
-  // with the second click, the content should be updated
-  fireEvent(getByTestId("dogConfusedHuh"), click);
+    // with the second click, the content should be updated
+    fireEvent.click(getByTestId("dogConfusedHuh"));
 
-  expect(getByTestId("display").textContent).toBe(dchText);
+    expect(getByTestId("display").textContent).toBe(dchText);
+  } finally {
+    //tear down the stub
+    window.HTMLAudioElement.prototype.play = undefined;
+  }
 });
 
 test("When the p element child of a drum-pad is clicked, the #display element should show the letter contained in the clicked drum pad", function () {
-  const { getByTestId } = render(<App />);
+  // setting up the stub
+  window.HTMLAudioElement.prototype.play = function () {
+    return Promise.resolve();
+  }
 
-  const click = new MouseEvent("click", { bubbles: true, cancelable: false });
+  try {
+    const { getByTestId } = render(<App />);
 
-  // text content of elements
-  const shText = getByTestId("swipeHigh").textContent;
-  const dchText = getByTestId("dogConfusedHuh").textContent;
+    // text content of elements
+    const shText = getByTestId("swipeHigh").textContent;
+    const dchText = getByTestId("dogConfusedHuh").textContent;
 
-  // first click
-  fireEvent(getByTestId("swipeHigh").firstElementChild, click);
+    // first click
+    fireEvent.click(getByTestId("swipeHigh").firstElementChild);
 
-  expect(getByTestId("display").textContent).toBe(shText);
+    expect(getByTestId("display").textContent).toBe(shText);
 
-  // with the second click, the display content should be updated
-  fireEvent(getByTestId("dogConfusedHuh").firstElementChild, click);
+    // with the second click, the display content should be updated
+    fireEvent.click(getByTestId("dogConfusedHuh").firstElementChild);
 
-  expect(getByTestId("display").textContent).toBe(dchText);
+    expect(getByTestId("display").textContent).toBe(dchText);
+  } finally {
+    //tear down the stub
+    window.HTMLAudioElement.prototype.play = undefined;
+  }
 });

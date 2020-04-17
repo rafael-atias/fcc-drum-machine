@@ -3,43 +3,78 @@
  */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import Audio from "../components/Audio";
 
-const audioComponent = <Audio
-    src="https://www.dropbox.com/s/xmys6drdqbvlnd6/dustyroom_cartoon_swipe_high_pitched.mp3?raw=1"
-    id="swipeHigh"
-    data-testid="swipeHigh" />;
+let audioComponent;
+let audioSrc;
+let audioId;
+
+beforeEach(() => {
+    audioSrc = "http://localhost/static/media/sounds/dustyroom_cartoon_swipe_high_pitched.mp3";
+    audioId = "swipeHigh";
+
+    audioComponent = <Audio
+        src={audioSrc}
+        id={audioId}
+        data-testid={audioId} />;
+})
+
+afterEach(cleanup);
 
 test("renders an audio element", function () {
-    const { getByTestId, asFragment } = render(audioComponent);
+    const { getByTestId, container } = render(audioComponent);
 
-    const anAudio = asFragment().firstChild;
+    const anAudio = container.firstChild;
 
     expect(getByTestId("swipeHigh")).toBeInTheDocument();
     expect(anAudio).not.toBe(null);
 });
 
 test("The Audio component should render the given id", function () {
-    const { asFragment } = render(audioComponent);
+    const { container } = render(audioComponent);
 
-    const anAudio = asFragment().firstChild;
+    const anAudio = container.firstChild;
 
-    expect(anAudio.id).toBe("swipeHigh");
+    expect(anAudio.id).toBe(audioId);
 });
 
 test("The Audio component should have a className clip", function () {
-    const { asFragment } = render(audioComponent);
+    const { container } = render(audioComponent);
 
-    const anAudio = asFragment().firstChild;
+    const anAudio = container.firstChild;
 
     expect(anAudio.className).toBe("clip");
 });
 
 test("The Audio component should render the given src value", function () {
-    const { asFragment } = render(audioComponent);
+    const { container } = render(audioComponent);
 
-    const anAudio = asFragment().firstChild;
+    const anAudio = container.firstChild;
 
-    expect(anAudio.src).toBe("https://www.dropbox.com/s/xmys6drdqbvlnd6/dustyroom_cartoon_swipe_high_pitched.mp3?raw=1");
+    expect(anAudio.src).toBe(audioSrc);
+});
+
+test("The Audio component should be able to be played", async function () {
+    // stub setup
+    window.HTMLAudioElement.prototype.play = function () {
+        return Promise.resolve();
+    }
+
+    try {
+        const { getByTestId } = render(audioComponent);
+
+        let played = false;
+
+        await getByTestId(audioId).play()
+            .then(function () {
+                played = true;
+            });
+
+        await expect(played).toBe(true);
+
+    } finally {
+        // stub teardown
+        window.HTMLAudioElement.prototype.play = undefined;
+    }
 });

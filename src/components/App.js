@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
 import Display from "./Display";
 import Drumpad from "./Drumpad";
+import Audio from "./Audio";
 import drumpadData from "./drumpadData";
+
+const clickHandler = function (stateUpdater) {
+  const wasDrumpadClicked = function (target) {
+    return target.className === "drum-pad" || target.parentElement.className === "drum-pad";
+  }
+
+  const getTheDrumpadsAudio = function (target) {
+    return target.className === "drum-pad" ?
+      target.firstElementChild.nextElementSibling :
+      target.parentElement.firstElementChild.nextElementSibling;
+  };
+
+  return function (event) {
+    const target = event.target;
+
+    if (wasDrumpadClicked(target) === false) {
+      return;
+    }
+
+    getTheDrumpadsAudio(target).play()
+    // .then(function () { 
+
+    // })
+    stateUpdater(target.textContent);
+  };
+};
 
 export default function App() {
   const [displayContent, setDisplayContent] = useState("");
 
-  const clickHandler = function (event) {
-    const isADrumpad = function (event) {
-      return event.target.className === "drum-pad" || event.target.parentElement.className === "drum-pad";
-    }
-
-    if (isADrumpad(event) === false) {
-      return;
-    }
-
-    setDisplayContent(event.target.textContent);
-  };
   return (
     <article className="App">
       <header>
@@ -25,16 +41,24 @@ export default function App() {
       <section data-testid="drum-machine" id="drum-machine">
         <Display text={displayContent} />
         <section className="drumpad-container"
-          onClick={clickHandler} >
-          {drumpadData()
-            .map(function (obj, index) {
-              return <Drumpad
-                key={`${obj.id}${index}`}
-                id={obj.id}
-                textContent={obj.textContent}
-                audioSrc={obj.audioSrc}
-              />
-            })
+          onClick={clickHandler(setDisplayContent)} >
+          {
+            drumpadData()
+              .map(function (props, index) {
+                const audio = (
+                  <Audio
+                    src={props.audioSrc}
+                    id={props.textContent}
+                    data-testid={props.textContent}
+                  />
+                );
+                return <Drumpad
+                  key={`${props.id}${index}`}
+                  id={props.id}
+                  textContent={props.textContent}
+                  audio={audio}
+                />
+              })
           }
         </section>
       </section>
