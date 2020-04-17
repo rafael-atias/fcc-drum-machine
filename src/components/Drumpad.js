@@ -1,5 +1,4 @@
 import React from "react";
-import Audio from "./Audio";
 
 export default function Drumpad(props) {
     return (
@@ -8,11 +7,7 @@ export default function Drumpad(props) {
             data-testid={props.id}
             className="drum-pad">
             <p>{props.textContent}</p>
-            <Audio
-                src={props.audioSrc}
-                id={props.textContent}
-                data-testid={props.textContent}
-            />
+            {props.audio}
         </div>
     );
 }
