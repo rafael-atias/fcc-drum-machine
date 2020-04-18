@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Display from "./Display";
 import Drumpad from "./Drumpad";
 import Audio from "./Audio";
@@ -9,6 +9,16 @@ import { clickHandler } from "../helpers/clickHandler";
 export default function App() {
   const [displayContent, setDisplayContent] = useState("");
 
+  const keyUpHandler = keyHandler(setDisplayContent);
+
+  useEffect(function () {
+    document.addEventListener("keyup", keyUpHandler);
+
+    return function () {
+      document.removeEventListener("keyup", keyUpHandler);
+    };
+  }, [keyUpHandler]);
+
   return (
     <article className="App">
       <header>
@@ -17,8 +27,7 @@ export default function App() {
       <section data-testid="drum-machine" id="drum-machine">
         <Display text={displayContent} />
         <section className="drumpad-container"
-          onClick={clickHandler(setDisplayContent)}
-          onKeyUp={keyHandler(setDisplayContent)}>
+          onClick={clickHandler(setDisplayContent)}>
           {
             drumpadData()
               .map(function (props, index) {
