@@ -18,9 +18,6 @@ export default function drumpadData() {
             id: "biteCrunch", textContent: "W", audioSrc: biteCrunch
         },
         {
-            id: "blink", textContent: "D", audioSrc: blink
-        },
-        {
             id: "catMeow", textContent: "E", audioSrc: catMeow
         },
         {
@@ -28,6 +25,9 @@ export default function drumpadData() {
         },
         {
             id: "dolphinLaugh", textContent: "S", audioSrc: dolphinLaugh
+        },
+        {
+            id: "blink", textContent: "D", audioSrc: blink
         },
         {
             id: "pop", textContent: "Z", audioSrc: pop
@@ -40,7 +40,6 @@ export default function drumpadData() {
         }
     ].map(function (obj) {
         return Object.assign(obj, {
-            // audioSrc: new URL(`${obj.audioSrc.href}?raw=1`)
             audioSrc: `${obj.audioSrc}`
         });
     });

@@ -2,33 +2,9 @@ import React, { useState } from 'react';
 import Display from "./Display";
 import Drumpad from "./Drumpad";
 import Audio from "./Audio";
-import drumpadData from "./drumpadData";
-
-const clickHandler = function (stateUpdater) {
-  const wasDrumpadClicked = function (target) {
-    return target.className === "drum-pad" || target.parentElement.className === "drum-pad";
-  }
-
-  const getTheDrumpadsAudio = function (target) {
-    return target.className === "drum-pad" ?
-      target.firstElementChild.nextElementSibling :
-      target.parentElement.firstElementChild.nextElementSibling;
-  };
-
-  return function (event) {
-    const target = event.target;
-
-    if (wasDrumpadClicked(target) === false) {
-      return;
-    }
-
-    getTheDrumpadsAudio(target).play()
-    // .then(function () { 
-
-    // })
-    stateUpdater(target.textContent);
-  };
-};
+import drumpadData from "../helpers/drumpadData";
+import { keyHandler } from "../helpers/keyHandler";
+import { clickHandler } from "../helpers/clickHandler";
 
 export default function App() {
   const [displayContent, setDisplayContent] = useState("");
@@ -41,7 +17,8 @@ export default function App() {
       <section data-testid="drum-machine" id="drum-machine">
         <Display text={displayContent} />
         <section className="drumpad-container"
-          onClick={clickHandler(setDisplayContent)} >
+          onClick={clickHandler(setDisplayContent)}
+          onKeyUp={keyHandler(setDisplayContent)}>
           {
             drumpadData()
               .map(function (props, index) {

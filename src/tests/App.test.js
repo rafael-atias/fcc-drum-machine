@@ -6,7 +6,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import App from '../components/App';
 import Drumpad from "../components/Drumpad";
-import drumpadData from "../components/drumpadData";
+import drumpadData from "../helpers/drumpadData";
 
 test('renders a #drum-machine element', () => {
   const { getByTestId } = render(<App />);
@@ -82,6 +82,34 @@ test("When the p element child of a drum-pad is clicked, the #display element sh
 
     // with the second click, the display content should be updated
     fireEvent.click(getByTestId("dogConfusedHuh").firstElementChild);
+
+    expect(getByTestId("display").textContent).toBe(dchText);
+  } finally {
+    //tear down the stub
+    window.HTMLAudioElement.prototype.play = undefined;
+  }
+});
+
+test("When the user presses a key with the same letter of a drum pad, the #display element should show the letter contained in the pressed key", function () {
+  // setting up the stub
+  window.HTMLAudioElement.prototype.play = function () {
+    return Promise.resolve();
+  }
+
+  try {
+    const { getByTestId } = render(<App />);
+
+    // text content of elements
+    const shText = getByTestId("swipeHigh").textContent; // q
+    const dchText = getByTestId("dogConfusedHuh").textContent; // a
+
+    // first key event
+    fireEvent.keyUp(getByTestId("swipeHigh").firstElementChild, { key: "q" });
+
+    expect(getByTestId("display").textContent).toBe(shText);
+
+    // with the second key event, the display content should be updated
+    fireEvent.keyUp(getByTestId("dogConfusedHuh").firstElementChild, { key: "a" });
 
     expect(getByTestId("display").textContent).toBe(dchText);
   } finally {
