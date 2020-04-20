@@ -1,13 +1,15 @@
 $backgrounds: (
     body-background-color: ghostwhite,
     display-background-color: hsl(165, 32%, 55%),
-    drum-pad-background-color: cadetblue
+    drum-pad-background-color: cadetblue,
+    drum-pad-active-background-color: #c3621d
 );
 
 $border-styles: (
     display-border: thin solid hsl(165, 25%, 35%),
     drum-pad-container-border: none,
-    drum-pad-border: thin solid #457173
+    drum-pad-border: thin solid #457173,
+    drum-pad-active-border: thin solid #f95a28
 );
 
 $text-styles: (
