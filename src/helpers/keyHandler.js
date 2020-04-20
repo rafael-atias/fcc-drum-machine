@@ -1,9 +1,13 @@
-const getAudioFromKey = function (key) {
+const getDrumpadFromKey = function (key) {
     return Array
         .from(document.querySelectorAll(".drum-pad"))
         .find(function (drumpad) {
             return drumpad.textContent === key.toUpperCase();
-        })
+        });
+};
+
+const getAudioFromKey = function (key) {
+    return getDrumpadFromKey(key)
         .firstElementChild
         .nextElementSibling
 };
@@ -20,7 +24,21 @@ export const keyHandler = function (stateUpdater) {
             return;
         }
 
-        getAudioFromKey(event.key).play();
+        getAudioFromKey(event.key).play()
+            .then(function () {
+                const dp = getDrumpadFromKey(event.key);
+
+                dp.style.backgroundColor = "#c3621d";
+                dp.style.border = "thin solid #f95a28";
+
+                return dp;
+            })
+            .then(function (drumpad) {
+                setTimeout(function () {
+                    drumpad.style.backgroundColor = "cadetblue";
+                    drumpad.style.border = "thin solid #457173";
+                }, 200);
+            })
         stateUpdater(event.key.toUpperCase());
     };
 };

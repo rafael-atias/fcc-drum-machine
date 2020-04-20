@@ -17,3 +17,8 @@
     border: get-val(--drum-pad-border);
     background-color: get-val(--drum-pad-background-color);
 }
+
+.drum-pad:active {
+    border: get-val(--drum-pad-active-border);
+    background-color: get-val(--drum-pad-active-background-color);
+}

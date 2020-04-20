@@ -20,6 +20,25 @@ export const clickHandler = function (stateUpdater) {
             return;
         }
 
-        getAudioFromClick(event.target).play() && stateUpdater(event.target.textContent);
+        // we store the event target here so it is available
+        // inside the async function
+        const target = event.target;
+
+        getAudioFromClick(target).play()
+            .then(function () {
+                const dp = getAudioFromClick(target).parentElement;
+
+                dp.style.backgroundColor = "#c3621d";
+                dp.style.border = "thin solid #f95a28";
+
+                return dp;
+            })
+            .then(function (drumpad) {
+                setTimeout(function () {
+                    drumpad.style.backgroundColor = "cadetblue";
+                    drumpad.style.border = "thin solid #457173";
+                }, 200);
+            });
+        stateUpdater(event.target.textContent);
     };
 };

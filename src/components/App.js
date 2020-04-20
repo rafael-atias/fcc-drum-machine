@@ -4,20 +4,21 @@ import Drumpad from "./Drumpad";
 import Audio from "./Audio";
 import drumpadData from "../helpers/drumpadData";
 import { keyHandler } from "../helpers/keyHandler";
-import { clickHandler } from "../helpers/clickHandler";
+import { clickHandler as cHandler } from "../helpers/clickHandler";
 
 export default function App() {
   const [displayContent, setDisplayContent] = useState("");
 
-  const keyUpHandler = keyHandler(setDisplayContent);
+  const [clickHandler, keyUpHandler] = [
+    cHandler,
+    keyHandler
+  ].map(function (handler) {
+    return handler(setDisplayContent);
+  });
 
   useEffect(function () {
     document.addEventListener("keyup", keyUpHandler);
-
-    return function () {
-      document.removeEventListener("keyup", keyUpHandler);
-    };
-  }, [keyUpHandler]);
+  });
 
   return (
     <article className="App">
@@ -27,7 +28,7 @@ export default function App() {
       <section data-testid="drum-machine" id="drum-machine">
         <Display text={displayContent} />
         <section className="drumpad-container"
-          onClick={clickHandler(setDisplayContent)}>
+          onClick={clickHandler}>
           {
             drumpadData()
               .map(function (props, index) {
