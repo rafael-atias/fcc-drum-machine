@@ -1,3 +1,10 @@
+import {
+    activeBackground,
+    activeBorder,
+    inactiveBackground,
+    inactiveBorder
+} from "./constants";
+
 const getDrumpadFromKey = function (key) {
     return Array
         .from(document.querySelectorAll(".drum-pad"))
@@ -28,15 +35,15 @@ export const keyHandler = function (stateUpdater) {
             .then(function () {
                 const dp = getDrumpadFromKey(event.key);
 
-                dp.style.backgroundColor = "#c3621d";
-                dp.style.border = "thin solid #f95a28";
+                dp.style.backgroundColor = activeBackground;
+                dp.style.border = activeBorder;
 
                 return dp;
             })
             .then(function (drumpad) {
                 setTimeout(function () {
-                    drumpad.style.backgroundColor = "cadetblue";
-                    drumpad.style.border = "thin solid #457173";
+                    drumpad.style.backgroundColor = inactiveBackground;
+                    drumpad.style.border = inactiveBorder;
                 }, 200);
             })
         stateUpdater(event.key.toUpperCase());
