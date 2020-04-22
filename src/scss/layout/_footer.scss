@@ -22,5 +22,21 @@ footer {
             $min-font-size: 0.8rem
         );
     }
+}
 
+footer > p {
+    display: none;
+
+    @include create-media-query(min-width, --small-breakpoint) {
+        /* layout rules */
+        display:block;
+        margin-top: 1rem;
+        margin-bottom: 1.2rem;
+
+        /* style rules */
+        @include styleText(
+            $color-css: --default-color-text,
+            $min-font-size: 0.8rem
+        );
+    }
 }
