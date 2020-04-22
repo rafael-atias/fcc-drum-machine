@@ -34,6 +34,7 @@ export default function App() {
     <article className="App">
       <header>
         <h1>Drum machine</h1>
+        <a href="https://github.com/rafael-atias/fcc-drum-machine" target="_blank" title="For developers only" rel="noopener noreferrer">Official repo</a>
       </header>
       <section data-testid="drum-machine" id="drum-machine">
         <Display text={displayContent} />
@@ -57,7 +58,6 @@ export default function App() {
                 />
               })
           }
-
         </section>
       </section>
       <footer>
