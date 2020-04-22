@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import App from '../components/App';
+import App from '../components/AppWrapper';
 import Drumpad from "../components/Drumpad";
 import drumpadData from "../helpers/drumpadData";
 

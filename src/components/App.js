@@ -62,6 +62,6 @@ export default function App() {
       <footer>
         <small>Sounds courtesy of Zapstan.com</small>
       </footer>
-    </article >
+    </article>
   );
 }
