@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { activateDrumpad } from "../redux/reduxHelpers";
 import Display from "./Display";
 import Drumpad from "./Drumpad";
 import Audio from "./Audio";
@@ -7,7 +9,15 @@ import { keyHandler } from "../helpers/keyHandler";
 import { clickHandler as cHandler } from "../helpers/clickHandler";
 
 export default function App() {
-  const [displayContent, setDisplayContent] = useState("");
+  const displayContent = useSelector(function (state) {
+    return state;
+  });
+
+  const dispatch = useDispatch();
+
+  const setDisplayContent = function (text) {
+    return dispatch(activateDrumpad(text));
+  };
 
   const [clickHandler, keyUpHandler] = [
     cHandler,
@@ -52,6 +62,6 @@ export default function App() {
       <footer>
         <small>Sounds courtesy of Zapstan.com</small>
       </footer>
-    </article >
+    </article>
   );
 }
