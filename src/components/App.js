@@ -57,9 +57,11 @@ export default function App() {
                 />
               })
           }
+
         </section>
       </section>
       <footer>
+        <p>Click any drum pad (or press the same key in your keyboard) to play a sound.</p>
         <small>Sounds courtesy of Zapstan.com</small>
       </footer>
     </article>
