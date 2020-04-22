@@ -27,7 +27,7 @@ footer {
 footer > p {
     display: none;
 
-    @include create-media-query(min-width, --small-breakpoint) {
+    @include create-media-query(min-width, --medium-breakpoint) {
         /* layout rules */
         display:block;
         margin-top: 1rem;
