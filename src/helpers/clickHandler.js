@@ -31,21 +31,25 @@ export const clickHandler = function (stateUpdater) {
         // inside the async function
         const target = event.target;
 
-        getAudioFromClick(target).play()
-            .then(function () {
+        const playPromise = getAudioFromClick(target).play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(function () {
                 const dp = getAudioFromClick(target).parentElement;
 
                 dp.style.backgroundColor = activeBackground;
                 dp.style.border = activeBorder;
 
                 return dp;
-            })
-            .then(function (drumpad) {
+            }).then(function (drumpad) {
                 setTimeout(function () {
                     drumpad.style.backgroundColor = inactiveBackground;
                     drumpad.style.border = inactiveBorder;
                 }, 200);
+            }).catch(function (error) {
+                console.error(error);
             });
+        }
         stateUpdater(event.target.textContent);
     };
 };
